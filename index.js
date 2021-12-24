@@ -86,7 +86,7 @@ bot.command('euphoria', (ctx) => {
 bot.command('euphoria2', (ctx) => {
     queryGPT3()
     .then(() => {
-        printContent = out.choices[0].text.replace("\$+", untilEuph)
+        printContent = out.choices[0].text.replace(/[(\$*)(\\*)]/g, untilEuph)
         ctx.reply(printContent)
     })
 

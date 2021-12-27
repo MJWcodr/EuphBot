@@ -18,7 +18,7 @@ const bot = new Telegraf(token)
 
 bot.help((ctx) => {
     ctx.reply(`
-/euphoria → sends a random quote
+/euphoria → sends a random ai generated quote
 /start_euphoria → sets the bot to send a quote and pin it at 8`)
 })
 //#region euphoria
@@ -79,14 +79,14 @@ async function queryGPT3() {
         })
 }
 
-bot.command('euphoria', (ctx) => {
+/* bot.command('euphoria', (ctx) => {
     ctx.replyWithMarkdown(randomEuphoria())
-}
-)
-bot.command('euphoria2', (ctx) => {
+}) */
+
+bot.command('euphoria', (ctx) => {
     queryGPT3()
     .then(() => {
-        printContent = out.choices[0].text.replace(/[(\$*)(\\*)]/g, untilEuph)
+        printContent = out.choices[0].text.replace(/[(\$*)]/g, untilEuph)
         ctx.reply(printContent)
     })
 
@@ -112,7 +112,6 @@ bot.command('start_euphoria', (ctx) => {
 })
 
 //#endregion
-
 
 bot.launch()
 

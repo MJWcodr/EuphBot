@@ -24,9 +24,13 @@ bot.help((ctx) => {
 //#region euphoria
 
 toDays = (date) => Math.round(date / 86400000)
-now = new Date()
+
+function getNow (){
+    return new Date()
+}
+
 euphDate = new Date(process.env.EUPHORIA_LAUNCH)
-untilEuph = toDays(euphDate - now)
+untilEuph = toDays(euphDate - getNow())
 reg = "\${untilEuph}"
 
 function dailyEuphoria() {
@@ -87,9 +91,10 @@ bot.command('euphoria', (ctx) => {
     queryGPT3()
     .then(() => {
         printContent = out.choices[0].text.replace(/[(\$*)]/g, untilEuph)
+        console.log(printContent)
+        console.log(getNow())
         ctx.reply(printContent)
     })
-
 })
 
 bot.command('test', (ctx) => {

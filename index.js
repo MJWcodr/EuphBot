@@ -45,7 +45,8 @@ function dailyEuphoria() {
 
     const lines = data.split(/\r?\n/);
     out = (i) => lines[i].replace(reg, untilEuph)
-    return out(untilEuph)
+
+    return out(untilEuph).replace(/\\*/, "")
 }
 function randomEuphoria() {
     data = fs.readFileSync('data/sentence_db', 'utf-8')
@@ -120,6 +121,6 @@ bot.command('start_euphoria', (ctx) => {
 
 bot.launch()
 
-// Enable graceful stop
+// Enable graceful stope
 process.once('SIGINT', () => bot.stop('SIGINT'))
 process.once('SIGTERM', () => bot.stop('SIGTERM'))

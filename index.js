@@ -1,4 +1,5 @@
 
+
 // dependencies
 const { Telegraf, Markup } = require('telegraf')
 const dotenv = require('dotenv');
@@ -25,7 +26,7 @@ bot.help((ctx) => {
 
 toDays = (date) => Math.round(date / 86400000)
 
-function getNow (){
+function getNow() {
     return new Date()
 }
 
@@ -58,7 +59,7 @@ async function queryGPT3() {
     authorization = process.env.OPENAI_TOKEN;
     url = "https://api.openai.com/v1/engines/davinci-codex/completions";
 
-    const prompt = fs.readFileSync("data/training_sentences", 'utf-8') ; //TODO: ADD PROMPT
+    const prompt = fs.readFileSync("data/training_sentences", 'utf-8'); //TODO: ADD PROMPT
 
     const body = {
         "prompt": prompt,
@@ -90,12 +91,12 @@ async function queryGPT3() {
 
 bot.command('euphoria', (ctx) => {
     queryGPT3()
-    .then(() => {
-        printContent = out.choices[0].text.replace(/[(\$*)]/g, untilEuph)
-        console.log(printContent)
-        console.log(getNow())
-        ctx.reply(printContent)
-    })
+        .then(() => {
+            printContent = out.choices[0].text.replace(/[(\$*)]/g, untilEuph)
+            console.log(printContent)
+            console.log(getNow())
+            ctx.reply(printContent)
+        })
 })
 
 bot.command('test', (ctx) => {

@@ -1,14 +1,14 @@
 
 
 // dependencies
-const { Telegraf, Markup } = require('telegraf')
-const dotenv = require('dotenv');
-const fs = require('fs')
+import { Telegraf, Markup } from 'telegraf';
+import { config } from 'dotenv';
+import { readFileSync } from 'fs';
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 
 // load environment variables
-dotenv.config();
+config();
 
 const token = process.env.BOT_TOKEN
 if (token === undefined) {
@@ -24,7 +24,9 @@ bot.help((ctx) => {
 })
 //#region euphoria
 
-toDays = (date) => Math.round(date / 86400000)
+
+toDays = (date) => Math.round(date / 86400000);
+
 
 function getNow() {
     return new Date()
@@ -36,7 +38,7 @@ reg = "\${untilEuph}"
 
 function dailyEuphoria() {
 
-    const data = fs.readFileSync('data/sentences_daily', 'UTF-8', (err) => {
+    const data = readFileSync('data/sentences_daily', 'UTF-8', (err) => {
         if (err) {
             console.error(err)
         }
@@ -50,7 +52,7 @@ function dailyEuphoria() {
     return out(untilEuph).replace(/\\*/, "")
 }
 function randomEuphoria() {
-    data = fs.readFileSync('data/sentence_db', 'utf-8')
+    data = readFileSync('data/sentence_db', 'utf-8')
     lines = data.split(/\r?\n/);
     quote = lines[Math.floor(Math.random() * lines.length)]
     return quote.replace(reg, untilEuph)
@@ -59,7 +61,7 @@ async function queryGPT3() {
     authorization = process.env.OPENAI_TOKEN;
     url = "https://api.openai.com/v1/engines/davinci-codex/completions";
 
-    const prompt = fs.readFileSync("data/training_sentences", 'utf-8'); //TODO: ADD PROMPT
+    const prompt = readFileSync("data/training_sentences", 'utf-8'); //TODO: ADD PROMPT
 
     const body = {
         "prompt": prompt,
